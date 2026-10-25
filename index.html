@@ -20,9 +20,7 @@
             animation: shine 3s linear infinite;
         }
         @keyframes shine {
-            to {
-                background-position: 200% center;
-            }
+            to { background-position: 200% center; }
         }
     </style>
 </head>
@@ -40,25 +38,132 @@
         </header>
 
         <div class="bg-slate-900 border border-slate-800 rounded-xl p-3 shadow-lg mb-3">
-            <div class="grid grid-cols-2 gap-2 mb-3 text-xs bg-slate-950 p-2.5 rounded-lg border border-slate-800">
-                <div>📌 باكو: <input type="number" id="bundleSize" value="100" class="bg-slate-900 text-emerald-400 font-bold px-1 py-0.5 rounded w-12 text-center border border-slate-700 inline-block" oninput="calculateAll()"></div>
-                <div>📌 رزمة: <input type="number" id="packSize" value="1000" class="bg-slate-900 text-emerald-400 font-bold px-1 py-0.5 rounded w-12 text-center border border-slate-700 inline-block" oninput="calculateAll()"></div>
+            <div class="flex justify-between items-center mb-3 text-xs bg-slate-950 p-2.5 rounded-lg border border-slate-800 gap-2">
+                <div class="flex items-center gap-1">📌 باكو: <input type="number" id="bundleSize" value="100" class="bg-slate-900 text-emerald-400 font-bold px-1.5 py-1 rounded w-14 text-center border border-slate-700" oninput="calculateAll()"></div>
+                <div class="flex items-center gap-1">📌 رزمة: <input type="number" id="packSize" value="1000" class="bg-slate-900 text-emerald-400 font-bold px-1.5 py-1 rounded w-14 text-center border border-slate-700" oninput="calculateAll()"></div>
             </div>
 
             <div class="overflow-x-auto">
                 <table class="w-full text-right border-collapse text-xs">
                     <thead>
                         <tr class="border-b border-slate-800 text-slate-400">
-                            <th class="py-2 px-1">الفئة</th>
-                            <th class="py-2 px-1">مفرد</th>
-                            <th class="py-2 px-1">بواكي</th>
-                            <th class="py-2 px-1">رزم</th>
-                            <th class="py-2 px-1">الإجمالي</th>
+                            <th class="py-2 px-1 text-center">الفئة</th>
+                            <th class="py-2 px-1 text-center">مفرد</th>
+                            <th class="py-2 px-1 text-center">بواكي</th>
+                            <th class="py-2 px-1 text-center">رزم</th>
+                            <th class="py-2 px-1 text-center">الإجمالي</th>
                         </tr>
                     </thead>
                     <tbody>
                         <!-- فئة 200 -->
                         <tr class="border-b border-slate-800/60">
-                            <td class="py-2.5 px-1 font-bold text-emerald-400 text-sm">200</td>
-                            <td class="py-2.5 px-1"><input type="number" id="friction-200" placeholder="0" class="calc-input next-field w-full bg-slate-950 border border-slate-800 rounded px-1 py-1.5 text-white text-center text-xs focus:border-emerald-500 focus:outline-none" oninput="calculateAll()"></td>
-                            <td class="py-2.5 px-1"><input type="number" id="bundle-200" placeholder="0" class="calc-input next-field w-full bg-slate-950 border border-slate-800 rounded px-1 py-1.5 text-white text-center
+                            <td class="py-2 px-1 font-bold text-emerald-400 text-sm text-center">200</td>
+                            <td class="py-2 px-1"><input type="number" id="friction-200" placeholder="0" class="calc-input next-field w-full bg-slate-950 border border-slate-800 rounded px-1 py-1.5 text-white text-center text-xs focus:border-emerald-500 focus:outline-none" oninput="calculateAll()"></td>
+                            <td class="py-2 px-1"><input type="number" id="bundle-200" placeholder="0" class="calc-input next-field w-full bg-slate-950 border border-slate-800 rounded px-1 py-1.5 text-white text-center text-xs focus:border-emerald-500 focus:outline-none" oninput="calculateAll()"></td>
+                            <td class="py-2 px-1"><input type="number" id="pack-200" placeholder="0" class="calc-input next-field w-full bg-slate-950 border border-slate-800 rounded px-1 py-1.5 text-white text-center text-xs focus:border-emerald-500 focus:outline-none" oninput="calculateAll()"></td>
+                            <td class="py-2 px-1 font-bold text-slate-200 text-[11px] text-center" id="total-200">0</td>
+                        </tr>
+                        <!-- فئة 100 -->
+                        <tr class="border-b border-slate-800/60">
+                            <td class="py-2 px-1 font-bold text-emerald-400 text-sm text-center">100</td>
+                            <td class="py-2 px-1"><input type="number" id="friction-100" placeholder="0" class="calc-input next-field w-full bg-slate-950 border border-slate-800 rounded px-1 py-1.5 text-white text-center text-xs focus:border-emerald-500 focus:outline-none" oninput="calculateAll()"></td>
+                            <td class="py-2 px-1"><input type="number" id="bundle-100" placeholder="0" class="calc-input next-field w-full bg-slate-950 border border-slate-800 rounded px-1 py-1.5 text-white text-center text-xs focus:border-emerald-500 focus:outline-none" oninput="calculateAll()"></td>
+                            <td class="py-2 px-1"><input type="number" id="pack-100" placeholder="0" class="calc-input next-field w-full bg-slate-950 border border-slate-800 rounded px-1 py-1.5 text-white text-center text-xs focus:border-emerald-500 focus:outline-none" oninput="calculateAll()"></td>
+                            <td class="py-2 px-1 font-bold text-slate-200 text-[11px] text-center" id="total-100">0</td>
+                        </tr>
+                        <!-- فئة 50 -->
+                        <tr class="border-b border-slate-800/60">
+                            <td class="py-2 px-1 font-bold text-emerald-400 text-sm text-center">50</td>
+                            <td class="py-2 px-1"><input type="number" id="friction-50" placeholder="0" class="calc-input next-field w-full bg-slate-950 border border-slate-800 rounded px-1 py-1.5 text-white text-center text-xs focus:border-emerald-500 focus:outline-none" oninput="calculateAll()"></td>
+                            <td class="py-2 px-1"><input type="number" id="bundle-50" placeholder="0" class="calc-input next-field w-full bg-slate-950 border border-slate-800 rounded px-1 py-1.5 text-white text-center text-xs focus:border-emerald-500 focus:outline-none" oninput="calculateAll()"></td>
+                            <td class="py-2 px-1"><input type="number" id="pack-50" placeholder="0" class="calc-input next-field w-full bg-slate-950 border border-slate-800 rounded px-1 py-1.5 text-white text-center text-xs focus:border-emerald-500 focus:outline-none" oninput="calculateAll()"></td>
+                            <td class="py-2 px-1 font-bold text-slate-200 text-[11px] text-center" id="total-50">0</td>
+                        </tr>
+                        <!-- فئة 20 -->
+                        <tr class="border-b border-slate-800/60">
+                            <td class="py-2 px-1 font-bold text-emerald-400 text-sm text-center">20</td>
+                            <td class="py-2 px-1"><input type="number" id="friction-20" placeholder="0" class="calc-input next-field w-full bg-slate-950 border border-slate-800 rounded px-1 py-1.5 text-white text-center text-xs focus:border-emerald-500 focus:outline-none" oninput="calculateAll()"></td>
+                            <td class="py-2 px-1"><input type="number" id="bundle-20" placeholder="0" class="calc-input next-field w-full bg-slate-950 border border-slate-800 rounded px-1 py-1.5 text-white text-center text-xs focus:border-emerald-500 focus:outline-none" oninput="calculateAll()"></td>
+                            <td class="py-2 px-1"><input type="number" id="pack-20" placeholder="0" class="calc-input next-field w-full bg-slate-950 border border-slate-800 rounded px-1 py-1.5 text-white text-center text-xs focus:border-emerald-500 focus:outline-none" oninput="calculateAll()"></td>
+                            <td class="py-2 px-1 font-bold text-slate-200 text-[11px] text-center" id="total-20">0</td>
+                        </tr>
+                        <!-- فئة 10 -->
+                        <tr class="border-b border-slate-800/60">
+                            <td class="py-2 px-1 font-bold text-emerald-400 text-sm text-center">10</td>
+                            <td class="py-2 px-1"><input type="number" id="friction-10" placeholder="0" class="calc-input next-field w-full bg-slate-950 border border-slate-800 rounded px-1 py-1.5 text-white text-center text-xs focus:border-emerald-500 focus:outline-none" oninput="calculateAll()"></td>
+                            <td class="py-2 px-1"><input type="number" id="bundle-10" placeholder="0" class="calc-input next-field w-full bg-slate-950 border border-slate-800 rounded px-1 py-1.5 text-white text-center text-xs focus:border-emerald-500 focus:outline-none" oninput="calculateAll()"></td>
+                            <td class="py-2 px-1"><input type="number" id="pack-10" placeholder="0" class="calc-input next-field w-full bg-slate-950 border border-slate-800 rounded px-1 py-1.5 text-white text-center text-xs focus:border-emerald-500 focus:outline-none" oninput="calculateAll()"></td>
+                            <td class="py-2 px-1 font-bold text-slate-200 text-[11px] text-center" id="total-10">0</td>
+                        </tr>
+                        <!-- فئة 5 -->
+                        <tr class="border-b border-slate-800/60">
+                            <td class="py-2 px-1 font-bold text-emerald-400 text-sm text-center">5</td>
+                            <td class="py-2 px-1"><input type="number" id="friction-5" placeholder="0" class="calc-input next-field w-full bg-slate-950 border border-slate-800 rounded px-1 py-1.5 text-white text-center text-xs focus:border-emerald-500 focus:outline-none" oninput="calculateAll()"></td>
+                            <td class="py-2 px-1"><input type="number" id="bundle-5" placeholder="0" class="calc-input next-field w-full bg-slate-950 border border-slate-800 rounded px-1 py-1.5 text-white text-center text-xs focus:border-emerald-500 focus:outline-none" oninput="calculateAll()"></td>
+                            <td class="py-2 px-1"><input type="number" id="pack-5" placeholder="0" class="calc-input next-field w-full bg-slate-950 border border-slate-800 rounded px-1 py-1.5 text-white text-center text-xs focus:border-emerald-500 focus:outline-none" oninput="calculateAll()"></td>
+                            <td class="py-2 px-1 font-bold text-slate-200 text-[11px] text-center" id="total-5">0</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="bg-gradient-to-r from-emerald-600 to-teal-700 rounded-xl p-3.5 shadow-xl flex flex-col gap-2.5">
+            <div>
+                <span class="text-emerald-100 text-[11px] block">الإجمالي الكلي:</span>
+                <h2 id="grandTotal" class="text-2xl font-black text-white tracking-wider">0 ج.م</h2>
+            </div>
+            <div class="flex gap-2">
+                <button onclick="resetForm()" class="flex-1 bg-black/20 text-white font-semibold py-2 rounded-lg text-xs border border-white/10 active:scale-95 transition">تصفير 🔄</button>
+                <button onclick="window.print()" class="flex-1 bg-white text-emerald-950 font-bold py-2 rounded-lg text-xs shadow active:scale-95 transition">طباعة 🖨️</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const denominations = [200, 100, 50, 20, 10, 5];
+
+        function calculateAll() {
+            const bundleSize = parseInt(document.getElementById('bundleSize').value) || 100;
+            const packSize = parseInt(document.getElementById('packSize').value) || 1000;
+            let grandTotal = 0;
+
+            denominations.forEach(denom => {
+                const frictionVal = parseFloat(document.getElementById(`friction-${denom}`).value) || 0;
+                const bundleVal = parseFloat(document.getElementById(`bundle-${denom}`).value) || 0;
+                const packVal = parseFloat(document.getElementById(`pack-${denom}`).value) || 0;
+
+                const totalSheets = frictionVal + (bundleVal * bundleSize) + (packVal * packSize);
+                const totalAmount = totalSheets * denom;
+                grandTotal += totalAmount;
+
+                document.getElementById(`total-${denom}`).innerText = totalAmount.toLocaleString();
+            });
+
+            document.getElementById('grandTotal').innerText = grandTotal.toLocaleString() + ' ج.م';
+        }
+
+        function resetForm() {
+            document.querySelectorAll('.calc-input').forEach(input => input.value = '');
+            calculateAll();
+        }
+
+        // الانتقال للخانة التالية عند الضغط على Enter من الكيبورد
+        const inputs = document.querySelectorAll('.next-field');
+        inputs.forEach((input, index) => {
+            input.addEventListener('keydown', function(event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    const nextInput = inputs[index + 1];
+                    if (nextInput) {
+                        nextInput.focus();
+                        nextInput.select();
+                    } else {
+                        input.blur();
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
