@@ -5,17 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>حاسبة الفئات النقدية</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Cairo', sans-serif; -webkit-tap-highlight-color: transparent; }
         input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
         
-        /* تأثير الاسم الساطع وحركة الشهاب الخفيفة */
-        .saturn-container {
-            position: relative;
-            display: inline-block;
-            padding: 10px 25px;
-        }
+        /* تأثير الاسم الساطع من غير حلقات */
         .neon-glow {
             background: linear-gradient(90deg, #ff4d4d, #ff8080, #ffffff, #ff8080, #ff4d4d);
             background-size: 200% auto;
@@ -25,45 +21,18 @@
             animation: shine 2s linear infinite;
             text-shadow: 0 0 12px rgba(255, 77, 77, 0.5);
             font-weight: 900;
-            position: relative;
-            z-index: 2;
         }
         @keyframes shine {
             to { background-position: 200% center; }
-        }
-        
-        /* حركة الشهاب الخفيفة الناعمة */
-        .saturn-ring {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 102%;
-            height: 55px;
-            border: 1.5px solid transparent;
-            border-top-color: rgba(255, 255, 255, 0.9);
-            border-radius: 50%;
-            transform: translate(-50%, -50%) rotate(-10deg);
-            animation: spinRing 1.8s linear infinite;
-            box-shadow: 0 0 8px rgba(255, 77, 77, 0.4);
-            pointer-events: none;
-            z-index: 3;
-        }
-        @keyframes spinRing {
-            0% { transform: translate(-50%, -50%) rotate(-10deg) perspective(200px) rotateY(0deg); opacity: 0.2; }
-            50% { opacity: 1; }
-            100% { transform: translate(-50%, -50%) rotate(-10deg) perspective(200px) rotateY(360deg); opacity: 0.2; }
         }
     </style>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen py-4 px-2">
 
-    <div class="max-w-md mx-auto">
-        <!-- اسم صاحب التطبيق مع حركة الشهاب الخفيفة -->
+    <div id="captureArea" class="max-w-md mx-auto bg-slate-950 p-1 rounded-xl">
+        <!-- اسم صاحب التطبيق المضبوط -->
         <div class="text-center mb-5 mt-2">
-            <div class="saturn-container">
-                <div class="saturn-ring"></div>
-                <h2 class="text-lg tracking-wider neon-glow uppercase">Muuhaameed hannii</h2>
-            </div>
+            <h2 class="text-lg tracking-wider neon-glow uppercase">Muuhaameed hannii</h2>
         </div>
 
         <header class="text-center mb-4">
@@ -149,7 +118,7 @@
             </div>
             <div class="flex gap-2">
                 <button onclick="resetForm()" class="flex-1 bg-black/20 text-white font-semibold py-2 rounded-lg text-xs border border-white/10 active:scale-95 transition">تصفير 🔄</button>
-                <button onclick="window.print()" class="flex-1 bg-white text-red-950 font-bold py-2 rounded-lg text-xs shadow active:scale-95 transition">طباعة 🖨️</button>
+                <button onclick="shareScreenshot()" id="shareBtn" class="flex-1 bg-white text-red-950 font-bold py-2 rounded-lg text-xs shadow active:scale-95 transition">مشاركة 📤</button>
             </div>
         </div>
     </div>
@@ -180,6 +149,40 @@
         function resetForm() {
             document.querySelectorAll('.calc-input').forEach(input => input.value = '');
             calculateAll();
+        }
+
+        // دالة التقاط الصورة والمشاركة الفورية
+        function shareScreenshot() {
+            const btn = document.getElementById('shareBtn');
+            btn.innerText = "جاري التقاط الصورة...";
+            
+            const element = document.getElementById('captureArea');
+            html2canvas(element, {
+                scale: 2,
+                backgroundColor: '#020617',
+                useCORS: true
+            }).then(canvas => {
+                canvas.toBlob(blob => {
+                    const file = new File([blob], "cash-calculation.png", { type: "image/png" });
+                    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                        navigator.share({
+                            files: [file],
+                            title: 'حاسبة الفئات النقدية',
+                            text: 'تقرير الفئات النقدية والإجمالي الكلي'
+                        }).catch(() => {});
+                    } else {
+                        // لو المتصفح مش يدعم المشاركة المباشرة ينزلها كصورة
+                        const link = document.createElement('a');
+                        link.download = 'cash-calculation.png';
+                        link.href = URL.createObjectURL(blob);
+                        link.click();
+                    }
+                    btn.innerText = "مشاركة 📤";
+                });
+            }).catch(() => {
+                btn.innerText = "مشاركة 📤";
+                alert("حدث خطأ أثناء التقاط الصورة");
+            });
         }
 
         // الانتقال للخانة التالية عند الضغط على Enter من الكيبورد
