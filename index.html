@@ -11,7 +11,13 @@
         body { font-family: 'Cairo', sans-serif; -webkit-tap-highlight-color: transparent; }
         input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
         
-        /* تأثير الاسم الساطع من غير حلقات */
+        /* منع الزوم في الموبايل وتوسيط النصوص والأرقام داخل الخانات تماماً */
+        input.calc-input, input[type="number"] {
+            font-size: 16px !important;
+            text-align: center !important;
+        }
+
+        /* تأثير الاسم الساطع */
         .neon-glow {
             background: linear-gradient(90deg, #ff4d4d, #ff8080, #ffffff, #ff8080, #ff4d4d);
             background-size: 200% auto;
@@ -171,7 +177,6 @@
                             text: 'تقرير الفئات النقدية والإجمالي الكلي'
                         }).catch(() => {});
                     } else {
-                        // لو المتصفح مش يدعم المشاركة المباشرة ينزلها كصورة
                         const link = document.createElement('a');
                         link.download = 'cash-calculation.png';
                         link.href = URL.createObjectURL(blob);
